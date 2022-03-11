@@ -60,12 +60,11 @@
     "returns": {
       "title": "Returns",
       "content":" We accept returns within 10 days of delivery. For more information, see the Delivery & Returns page."
+    },
+    "form": {
+      "submit": "Add to Cart",
+      "sold_out": "Sold Out"
     }
-  },
-
-  "form": {
-    "submit": "Add to Cart",
-    "sold_out": "Sold Out"
   }
 
 }
