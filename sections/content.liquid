@@ -1,0 +1,182 @@
+{% schema %}
+
+    {
+    "name": "Page Content",
+    "class": "page-content-section",
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "Collection",
+            "settings": [
+                {
+                    "id": "collection",
+                    "type": "collection",
+                    "label": "Collection"
+                },
+                {
+                    "id": "max_products",
+                    "type": "range",
+                    "min": 2,
+                    "max": 6,
+                    "step": 1,
+                    "unit": "ct",
+                    "label": "Products to Show",
+                    "default": 2
+                },
+                {   
+                    "id": "title",
+                    "type": "text",
+                    "label": "Title",
+                    "info": "Default to Collection Title"
+                },
+                {   
+                    "id": "content",
+                    "type": "textarea",
+                    "label": "Content"
+                },
+                {
+                    "id": "show_button",
+                    "type": "checkbox",
+                    "label": "Show Button?",
+                    "default": true    
+                },
+                {   
+                    "id": "button_text",
+                    "type": "text",
+                    "label": "Button Text",
+                    "placeholder": "Shop Now",
+                    "info": "Defaults to \"Shop Now\""
+                }
+            ]
+        },
+        {
+            "type": "image_text",
+            "name": "Image Text",
+            "settings": [
+                {
+                    "id": "image",
+                    "type": "image_picker",
+                    "label": "Image"
+                },
+                {   
+                    "id": "title",
+                    "type": "text",
+                    "label": "Title",
+                    "info": "Default to Collection Title"
+                },
+                {   
+                    "id": "content",
+                    "type": "textarea",
+                    "label": "Content"
+                },
+                {
+                    "id": "show_button",
+                    "type": "checkbox",
+                    "label": "Show Button?",
+                    "default": true    
+                },
+                {   
+                    "id": "button_url",
+                    "type": "url",
+                    "label": "Button URL"
+                },
+                {   
+                    "id": "button_text",
+                    "type": "text",
+                    "label": "Button Text",
+                    "placeholder": "Shop Now",
+                    "info": "Defaults to \"Shop Now\""
+                },
+                {
+                    "id": "direction",
+                    "type": "select",
+                    "label": "Direction",
+                    "options": [
+                        {
+                            "value": "rtl",
+                            "label": "Image Text"
+                        },
+                        {
+                            "value": "ltr",
+                            "label": "Text Image"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "quote",
+            "name": "Quote",
+            "settings": [
+                {
+                    "id": "content",
+                    "type": "textarea",
+                    "label": "Content"
+                },
+                {
+                    "id": "source",
+                    "type": "textarea",
+                    "label": "Source"
+                },
+                {
+                    "id": "show_button",
+                    "type": "checkbox",
+                    "label": "Show Button?",
+                    "default": true    
+                },
+                {   
+                    "id": "button_url",
+                    "type": "url",
+                    "label": "Button URL"
+                },
+                {   
+                    "id": "button_text",
+                    "type": "text",
+                    "label": "Button Text",
+                    "placeholder": "Read More",
+                    "info": "Defaults to \"Read More\""
+                }
+            ]
+        }
+    ],
+
+    "presets": [
+        {
+            "category": "Content",
+            "name": "Index Content",
+            "blocks": [
+                {
+                    "type": "collection",
+                    "settings": {
+                        "collection": "collection-0",
+                        "title": "Collection Title",
+                        "content": "Loren Ipsum",
+                        "show_button": true
+                    }
+                },
+                {
+                    "type": "image_text",
+                    "settings": {
+                        "title": "New Block 1",
+                        "content": "Loren Ipsum dolor sit amet",
+                        "show_button": true,
+                        "button_url": "#"
+                    }
+                },
+                {
+                    "type": "image_text",
+                    "settings": {
+                        "title": "New Block 2",
+                        "content": "Loren Ipsum dolor sit amet",
+                        "show_button": false,
+                        "button_url": "#",
+                        "direction": "ltr"
+                    }
+                }
+            ]
+        }
+    ]
+
+    }
+
+{% endschema %}
