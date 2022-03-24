@@ -190,6 +190,35 @@ $(document).ready(function() {
 
     productForm.init();
 
+    //Ajax API Functionality
+    let ajaxify = {
+        onAddToCart: function(event)  {
+            event.preventDefault();
+
+            $.ajax ({
+                type: 'POST',
+                url: '/cart/add.js',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: ajaxify.onCartUpdated,
+                error: ajaxify.onError
+            });
+        },
+        onCartUpdated: function() {
+            console.log('cart is updated')
+        },
+        onError: function(XMLHttpRequest, textStatus) {
+            let data = XMLHttpRequest.responseJSON;
+            alert(data.status + ' - ' + data.message + ': ' + data.description);
+
+        },
+        init: function() {
+            $(document).on('submit', addToCartFormSelector, ajaxify.onAddToCart);
+        }
+    };
+
+    ajaxify.init();
+
 });
 
 
