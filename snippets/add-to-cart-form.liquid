@@ -1,10 +1,10 @@
 {% assign has_multiple_variants = false %}
-{% if products.variants.size > 1 %}
+{% if product.variants.size > 1 %}
     {% assign has_multiple_variants = true %}
 {% endif %}
 
 {% assign has_multiple_options = false %}
-{% if products.options.size > 1 %}
+{% if product.options.size > 1 %}
     {% assign has_multiple_options = true %}
 {% endif %}
 
