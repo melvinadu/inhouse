@@ -156,7 +156,17 @@ $(document).ready(function() {
                 hasVariant = selectedVariant !== null,
                 canAddToCart = hasVariant && selectedVariant.inventory_quantity > 0,
                 $id = $form.find('.js-variant-id'),
-                $addToCartButton = $form.find('#add-to-cart-button');
+                $addToCartButton = $form.find('#add-to-cart-button'),
+                $price = $form.find('.js-price'),
+                formattedVariantPrice,
+                priceHTML;
+
+            if (hasVariant) {
+                formattedVariantPrice = '$' + (selectedVariant.price/100).toFixed(2);
+                priceHTML = '<span class="money">'+formattedVariantPrice+'</span>';
+            } else {
+                priceHTML = $price.attr('data-default-price');
+            }
 
             if(canAddToCart) {
                 $id.val(selectedVariant.id);
@@ -166,6 +176,9 @@ $(document).ready(function() {
                 $id.val('');
                 $addToCartButton.prop('disabled', true)
             }
+
+            $price.html(priceHTML);
+            currencyPicker.onMoneySpanAdded();
         },
         init: function() {
             $(document).on('change', productOptionSelector, productForm.onProductOptionChanged);

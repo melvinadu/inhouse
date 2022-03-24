@@ -34,7 +34,7 @@
         
     {% endif %}
 
-    <input class="js-variant-id" type="hidden" name="id" value="{% unless has_multiple_variants %} {{ product.variants.first.id }} {% endunless %}">
+    <input class="js-variant-id" type="hidden" name="id" value="{% unless has_multiple_variants %}{{ product.variants.first.id }}{% endunless %}">
 
     <span class="js-price" data-default-price="{{ product.price | money }}"> {{ current_variant.price | money }} </span>
 
