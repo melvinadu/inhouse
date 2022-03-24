@@ -12,7 +12,7 @@
     {% include 'get-variants-with-quantity-json' with product: product %}
 {% endif %}
 
-<form id="add-to-cart-form" action="/cart/add" method="post" enctype="multipart/form-data">
+<form id="add-to-cart-form" action="/cart/add" method="post" enctype="multipart/form-data" data-variants="{{ variants_with_quantity_json | url_param_escape }}">
 
     {% if has_multiple_options or has_multiple_variants %}
         <select id="productSelect">
