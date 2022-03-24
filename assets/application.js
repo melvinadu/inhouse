@@ -164,6 +164,7 @@ $(document).ready(function() {
             if (hasVariant) {
                 formattedVariantPrice = '$' + (selectedVariant.price/100).toFixed(2);
                 priceHTML = '<span class="money">'+formattedVariantPrice+'</span>';
+                window.history.replaceState(null, null, '?variant='+selectedVariant.id);
             } else {
                 priceHTML = $price.attr('data-default-price');
             }

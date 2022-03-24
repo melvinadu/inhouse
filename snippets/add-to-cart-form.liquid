@@ -8,12 +8,19 @@
     {% assign has_multiple_options = true %}
 {% endif %}
 
+{% assign has_selected_variant = false %}
+{% if product.selected_variant != nil %}
+    {% assign has_selected_variant = true %}
+{% endif %}
+
 {% if has_multiple_variants %}
     {% include 'get-variants-with-quantity-json' with product: product %}
 {% endif %}
 
 {% assign can_add_to_cart = false %}
-{% if has_multiple_variants == false and product.available %}
+{% if has_selected_variant and product.selected_variant.available %}
+    {% assign can_add_to_cart = true %}
+{% elsif has_multiple_variants == false and product.available %}
     {% assign can_add_to_cart = true %}
 {% endif %}
 
@@ -24,17 +31,22 @@
         {% for option in product.options_with_values %}
             {% assign option_name = 'option' | append: option.position %}
 
+            {% assign selected = false %}
+            {% if has_selected_variant %}
+                {% assign selected = product.selected_variant[option_name] %}
+            {% endif %}
+
             {% if option.name != 'Color' %}
-                {% include 'product-option-row' with option: option, option_name: option_name, type: 'select' %}
+                {% include 'product-option-row' with option: option, option_name: option_name, type: 'select', selected: selected %}
             {% else %}
-                {% include 'product-option-row' with option: option, option_name: option_name %}
+                {% include 'product-option-row' with option: option, option_name: option_name, selected: selected %}
             {% endif %}
         {% endfor %}
 
         
     {% endif %}
 
-    <input class="js-variant-id" type="hidden" name="id" value="{% unless has_multiple_variants %}{{ product.variants.first.id }}{% endunless %}">
+    <input class="js-variant-id" type="hidden" name="id" value="{% if has_selected_variant %}{{ product.selected_variant.id }}{% elsif has_multiple_variants != true %}{{ product.variants.first.id }}{% endif %}">
 
     <span class="js-price" data-default-price="{{ product.price | money }}"> {{ current_variant.price | money }} </span>
 
