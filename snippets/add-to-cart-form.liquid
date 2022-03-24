@@ -12,9 +12,27 @@
     {% include 'get-variants-with-quantity-json' with product: product %}
 {% endif %}
 
+{% assign can_add_to_cart = false %}
+{% if has_multiple_variants == false and product.available %}
+    {% assign can_add_to_cart = true %}
+{% endif %}
+
 <form id="add-to-cart-form" action="/cart/add" method="post" enctype="multipart/form-data" data-variants="{{ variants_with_quantity_json | url_param_escape }}">
 
     {% if has_multiple_options or has_multiple_variants %}
+
+        {% for option in product.options_with_values %}
+            {% assign option_name = 'option' | append: option.position %}
+
+            {% if option.name != 'Color' %}
+                {% include 'product-option-row' with option: option, option_name: option_name, type: 'select' %}
+            {% else %}
+                {% include 'product-option-row' with option: option, option_name: option_name %}
+            {% endif %}
+        {% endfor %}
+
+
+        {% comment %} Old Select Button
         <select id="productSelect">
         {% for variant in product.variants %}
             {% if variant.available %}
@@ -27,7 +45,9 @@
             </option>
             {% endif %}
         {% endfor %}
-        </select>
+        </select> 
+        {% endcomment %}
+        
     {% endif %}
 
     <input class="js-variant-id" type="hidden" name="id" value="{% unless has_multiple_variants %} {{ product.variants.first.id }} {% endunless %}">
@@ -36,6 +56,6 @@
 
     <label for="Quantity">quantity</label>
     <input type="number" id="Quantity" name="quantity" value="1" min="1">
-    <button type="submit" name="add" id="add-to-cart-button">Add to cart</button>
+    <button type="submit" name="add" id="add-to-cart-button" {% if can_add_to_cart != true %} disabled {% endif %}>Add to cart</button>
 
   </form>
