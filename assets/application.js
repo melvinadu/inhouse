@@ -376,4 +376,27 @@ let
 
 lineItem.init();
 
+//Search Input
+
+let 
+    searchInputSelector = '.js-search-input',
+    searchSubmitSelector = '.js-search-submit',
+    onSearchInputKeyUp = function(event) {
+        let
+            $form = $(this).closest('form'),
+            $button = $form.find(searchSubmitSelector),
+            shouldDisableButton = this.value.length === 0;
+
+        $button.prop('disabled', shouldDisableButton)
+    };
+
+$(document).on('keyup', searchInputSelector, onSearchInputKeyUp);
+
+
+
+
+
+
 });
+
+
