@@ -191,6 +191,7 @@ $(document).ready(function() {
     productForm.init();
 
     //Ajax API Functionality
+    let miniCartContentsSelector = '.js-mini-cart-contents';
     let ajaxify = {
         onAddToCart: function(event)  {
             event.preventDefault();
@@ -204,15 +205,12 @@ $(document).ready(function() {
                 error: ajaxify.onError
             });
         },
-        onLineRemoved: function(event) {
-            event.preventDefault();
-
-            let
-                $removeLink = $(this),
-                removeQuery = $removeLink.attr('href').split('change?')[1];
-            $.post('/cart/change.js', removeQuery, ajaxify.onCartUpdated, 'json');
-        },
         onCartUpdated: function() {
+            let 
+                $miniCartFieldset = $(miniCartContentsSelector + ' .js-cart-fieldset');
+
+            $miniCartFieldset.prop('disabled', true);
+
             $.ajax({
                 type: 'GET',
                 url: '/cart',
@@ -222,7 +220,7 @@ $(document).ready(function() {
                         $dataCartContents = $(context).find('.js-cart-page-contents'),
                         dataCartHtml = $dataCartContents.html(),
                         dataCartItemCount = $dataCartContents.attr('data-cart-item-count'),
-                        $miniCartContents = $('.js-mini-cart-contents'),
+                        $miniCartContents = $(miniCartContentsSelector),
                         $cartItemCount = $('.js-cart-item-count');
 
                     $cartItemCount.text(dataCartItemCount);
@@ -263,15 +261,12 @@ $(document).ready(function() {
         init: function() {
             $(document).on('submit', addToCartFormSelector, ajaxify.onAddToCart);
 
-            $(document).on('click', '#mini-cart .js-remove-line', ajaxify.onLineRemoved);
-
             $(document).on('click', '.js-cart-link', ajaxify.onCartButtonClick);
         }
     };
 
     ajaxify.init();
 
-});
 
 //Quantity Fields
 let
@@ -331,3 +326,54 @@ let
 
     quantityPicker.init();
 
+// Line Item
+let
+    removeLineSelector =  '.js-remove-line',
+    lineQuantitySelector = '.js-line-quantity';
+
+let
+    lineItem = {
+        isInMiniCart: function(element) {
+            let
+                $element = $(element),
+                $miniCart = $(element).closest(miniCartContentsSelector),
+                isInMiniCart = $miniCart.length !== 0;
+
+            return isInMiniCart;
+        },
+        onLineQuantityChanged: function(event) {
+            let
+                quantity = this.value,
+                id = $(this).attr('id').replace('updates_', ''),
+                changes = {
+                    quantity: quantity,
+                    id: id
+                },
+                isInMiniCart = lineItem.isInMiniCart(this);
+            
+            if (isInMiniCart) {
+                $.post('/cart/change.js', changes, ajaxify.onCartUpdated, 'json');
+            }
+        },
+        onLineRemoved: function(event) {
+            let isInMiniCart = lineItem.isInMiniCart(this);
+
+            if (isInMiniCart) {
+                event.preventDefault();
+
+                let
+                    $removeLink = $(this),
+                    removeQuery = $removeLink.attr('href').split('change?')[1];
+                $.post('/cart/change.js', removeQuery, ajaxify.onCartUpdated, 'json');
+            }
+        },
+        init: function() {
+            $(document).on('click', removeLineSelector, lineItem.onLineRemoved);
+            $(document).on('change', lineQuantitySelector, lineItem.onLineQuantityChanged);
+
+        }
+    };
+
+lineItem.init();
+
+});
