@@ -63,6 +63,7 @@
     },
     "form": {
       "submit": "Add to Cart",
+      "quantity": "Quantity",
       "sold_out": "Sold Out"
     }
   }
