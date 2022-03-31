@@ -73,6 +73,11 @@
       "label": "Search In-House",
       "placeholder": "Your search term",
       "submit": "Submit"
+    },
+    "results": {
+      "empty": "No results for {{ searchTerms }}",
+      "filled_singular": "result",
+      "filled_plural": "results"
     }
   }
 
