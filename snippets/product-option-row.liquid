@@ -21,7 +21,13 @@
             {% for value in option.values %}
                 {% assign radio_id = 'option-' | append: option_name | append: '-' | append: value | handle %}
                 <input id="{{ radio_id }}" type="radio" name="{{ option_name }}" value="{{ value }}" {% if value == selected %}checked{% endif %}>
-                <label for="{{ radio_id }}"> {{ value }} </label>
+                <label for="{{ radio_id }}"> 
+                    {% if force_colors == true %}
+                        {% include 'color-swatch' with color: value %}
+                    {% else %}
+                        {{ value }} 
+                    {% endif %}
+                </label>
             {% endfor %}
 
         {% endif %}
