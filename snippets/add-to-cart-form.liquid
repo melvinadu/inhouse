@@ -48,10 +48,11 @@
 
     <input class="js-variant-id" type="hidden" name="id" value="{% if has_selected_variant %}{{ product.selected_variant.id }}{% elsif has_multiple_variants != true %}{{ product.variants.first.id }}{% endif %}">
 
-    <span class="js-price" data-default-price="{{ product.price | money }}"> {{ current_variant.price | money }} </span>
 
-    <label for="Quantity">quantity</label>
-    <input type="number" id="Quantity" name="quantity" value="1" min="1">
-    <button type="submit" name="add" id="add-to-cart-button" {% if can_add_to_cart != true %} disabled {% endif %}>Add to cart</button>
+    <button type="submit" name="add" id="add-to-cart-button" {% if can_add_to_cart != true %} disabled {% endif %}>
+        {{ 'product.form.submit' | t  }}
+        &ndash;
+        <span class="js-price" data-default-price="{{ product.price | money }}"> {{ current_variant.price | money }} </span>
+    </button>
 
   </form>
