@@ -1,15 +1,11 @@
-{% comment %} the following code does not work effectively due to sass deprecation after online store 2.0, to fix later please see https://www.shopify.ca/partners/blog/deprecating-sass {% endcomment %}
-
 #mini-cart {
     display: none;
 }
 
-html.mini-cart-open {
-    #mini-cart {
+html.mini-cart-open #mini-cart {
         display: block;
-    }
-
-    main {
-        opacity: 0.3;
-    }
+}
+    
+html.mini-cart-open main {
+    opacity: 0.3;
 }
