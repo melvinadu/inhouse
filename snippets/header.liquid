@@ -1,13 +1,15 @@
 <div id="#header-global">
 
     <a href="/">
-        {{ 'general.shop.title' | t }}
+        {{ assign shop_title = 'general.shop.title' | t }}
+        {% include 'inline-icon' with svg: 'logo.svg', alt: shop_title, class: 'logo-main' %}
     </a>
 
     {% include 'nav-list', handle: 'main-menu' %}
 
     <a href="/search">
         Search
+        {% include 'inline-icon' with svg: 'icon-search.svg' %}
     </a>
 
     {% include 'currency-picker' %}
